@@ -51,32 +51,32 @@ export function Dashboard() {
   const today = new Date();
 
   return (
-    <div className="p-4 max-w-7xl mx-auto space-y-4 animate-in fade-in duration-500">
+    <div className="p-3 sm:p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-4 sm:space-y-6 animate-in fade-in duration-500">
       
       {/* Header Area */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-3">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-3 sm:gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-ink">Good morning, Administrator</h1>
-          <p className="text-sm text-slate mt-1">Here's your operational overview for today.</p>
-          <div className="flex items-center gap-2 mt-2 text-xs text-slate font-medium">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-ink">Good morning, Administrator</h1>
+          <p className="text-xs sm:text-sm text-slate mt-1">Here's your operational overview for today.</p>
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mt-2 text-[10px] sm:text-xs text-slate font-medium">
             <CalendarClock className="w-3.5 h-3.5 text-marine" />
             <span>{format(today, 'EEEE, MMMM d, yyyy')}</span>
             <span className="mx-2 text-mist">•</span>
             <span className="text-brass">Main Branch</span>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" className="gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto mt-2 sm:mt-0">
+          <Button variant="outline" className="flex-1 sm:flex-none gap-2">
             <UserCheck className="w-3.5 h-3.5" /> New Patient
           </Button>
-          <Button className="gap-2">
+          <Button className="flex-1 sm:flex-none gap-2">
             <Wallet className="w-3.5 h-3.5" /> New Sale
           </Button>
         </div>
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
         <Card className="shadow-none border-mist/60 bg-gradient-to-br from-surface to-paper">
           <CardContent className="p-3">
             <div className="flex justify-between items-start">
@@ -169,10 +169,10 @@ export function Dashboard() {
       </div>
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         
         {/* Left Column - Larger span */}
-        <div className="lg:col-span-2 space-y-4">
+        <div className="lg:col-span-2 space-y-4 sm:space-y-6">
           
           {/* Chart */}
           <Card>
@@ -247,7 +247,7 @@ export function Dashboard() {
         </div>
 
         {/* Right Column */}
-        <div className="space-y-4">
+        <div className="space-y-4 sm:space-y-6">
           
           {/* Today's Schedule */}
           <Card className="flex flex-col h-[280px]">

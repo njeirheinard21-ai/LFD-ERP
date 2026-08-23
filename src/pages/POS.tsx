@@ -22,6 +22,7 @@ export function POS() {
   ]);
   const [syncState, setSyncState] = useState<'online' | 'offline' | 'syncing'>('online');
   const [queueCount, setQueueCount] = useState(0);
+  const [showMobileCart, setShowMobileCart] = useState(false);
 
   const subtotal = cart.reduce((acc, item) => acc + (item.product.price * item.qty), 0);
   const total = subtotal;
@@ -44,12 +45,13 @@ export function POS() {
     } else {
       setCart([]);
     }
+    setShowMobileCart(false);
   };
 
   return (
-    <div className="flex h-[calc(100vh-3rem)] bg-paper animate-in fade-in duration-500">
+    <div className="flex h-[calc(100dvh-3rem)] bg-paper animate-in fade-in duration-500 relative overflow-hidden">
       {/* Left: Product Catalog */}
-      <div className="flex-1 flex flex-col p-4 space-y-3 overflow-hidden border-r border-mist">
+      <div className="flex-1 flex flex-col p-3 sm:p-4 space-y-3 overflow-hidden border-r border-mist pb-20 lg:pb-4">
         <div className="flex justify-between items-center">
           <h1 className="text-xl font-bold text-ink">Point of Sale</h1>
           
@@ -79,10 +81,10 @@ export function POS() {
         </div>
 
         <div className="flex gap-1.5 pb-1 overflow-x-auto scrollbar-hide">
-          <Badge variant="default" className="px-3 py-1 cursor-pointer text-xs">All</Badge>
-          <Badge variant="outline" className="px-3 py-1 cursor-pointer text-xs bg-surface">Pharmacy</Badge>
-          <Badge variant="outline" className="px-3 py-1 cursor-pointer text-xs bg-surface">Laboratory</Badge>
-          <Badge variant="outline" className="px-3 py-1 cursor-pointer text-xs bg-surface">Clinical</Badge>
+          <Badge variant="default" className="px-3 py-1 cursor-pointer text-xs shrink-0">All</Badge>
+          <Badge variant="outline" className="px-3 py-1 cursor-pointer text-xs bg-surface shrink-0">Pharmacy</Badge>
+          <Badge variant="outline" className="px-3 py-1 cursor-pointer text-xs bg-surface shrink-0">Laboratory</Badge>
+          <Badge variant="outline" className="px-3 py-1 cursor-pointer text-xs bg-surface shrink-0">Clinical</Badge>
         </div>
 
         <div className="flex-1 overflow-y-auto grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 pb-2">
@@ -107,15 +109,31 @@ export function POS() {
         </div>
       </div>
 
+      {/* Mobile Cart Overlay Backdrop */}
+      {showMobileCart && (
+        <div 
+          className="absolute inset-0 bg-ink/50 z-10 lg:hidden backdrop-blur-sm" 
+          onClick={() => setShowMobileCart(false)} 
+        />
+      )}
+
       {/* Right: Cart & Payment */}
-      <div className="w-[320px] flex flex-col bg-surface z-10 shadow-[-4px_0_15px_rgba(0,0,0,0.02)]">
+      <div className={cn(
+        "w-full sm:w-[360px] lg:w-[320px] flex flex-col bg-surface z-20 shadow-[-4px_0_15px_rgba(0,0,0,0.02)] transition-transform duration-300 absolute lg:relative inset-y-0 right-0",
+        showMobileCart ? "translate-x-0" : "translate-x-full lg:translate-x-0"
+      )}>
         <div className="p-3 border-b border-mist flex justify-between items-center bg-slate/5">
           <h2 className="font-bold text-base text-ink flex items-center gap-1.5">
             <ShoppingCart className="w-4 h-4 text-marine" /> Current Sale
           </h2>
-          <Button variant="ghost" size="sm" className="text-danger hover:text-danger hover:bg-danger-light/50 h-7 text-xs px-2" onClick={() => setCart([])}>
-            Clear
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" className="text-danger hover:text-danger hover:bg-danger-light/50 h-7 text-xs px-2" onClick={() => setCart([])}>
+              Clear
+            </Button>
+            <Button variant="ghost" size="icon" className="lg:hidden h-7 w-7 text-slate hover:bg-slate/10" onClick={() => setShowMobileCart(false)}>
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
 
         <div className="flex-1 overflow-y-auto p-3 space-y-2">
@@ -183,6 +201,24 @@ export function POS() {
           )}
         </div>
       </div>
+
+      {/* Mobile FAB to open Cart */}
+      {!showMobileCart && cart.length > 0 && (
+        <div className="lg:hidden absolute bottom-4 left-4 right-4 z-10 animate-in slide-in-from-bottom-10 fade-in duration-300">
+          <Button 
+            className="w-full h-14 shadow-lg shadow-marine/20 bg-marine hover:bg-marine/90 text-white rounded-xl flex items-center justify-between px-5" 
+            onClick={() => setShowMobileCart(true)}
+          >
+            <div className="flex items-center gap-3 font-semibold">
+              <div className="bg-white/20 p-2 rounded-lg">
+                <ShoppingCart className="w-5 h-5" />
+              </div>
+              <span className="text-sm">{cart.length} {cart.length === 1 ? 'Item' : 'Items'}</span>
+            </div>
+            <span className="font-bold text-lg tracking-tight">{formatCurrency(total)}</span>
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

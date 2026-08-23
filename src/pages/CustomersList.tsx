@@ -18,17 +18,17 @@ export function CustomersList() {
   const [searchTerm, setSearchTerm] = useState("");
 
   return (
-    <div className="p-4 max-w-7xl mx-auto space-y-4 animate-in fade-in duration-500">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+    <div className="p-3 sm:p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-4 sm:space-y-6 animate-in fade-in duration-500">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-ink">Customers</h1>
-          <p className="text-xs text-slate mt-1">Manage customer relationships and patient profiles.</p>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-ink">Customers</h1>
+          <p className="text-xs sm:text-sm text-slate mt-1">Manage customer relationships and patient profiles.</p>
         </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" className="gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto mt-2 sm:mt-0">
+          <Button variant="outline" className="flex-1 sm:flex-none gap-2">
             <Download className="w-3.5 h-3.5" /> Export
           </Button>
-          <Button className="gap-2">
+          <Button className="flex-1 sm:flex-none gap-2">
             <Plus className="w-3.5 h-3.5" /> Add Customer
           </Button>
         </div>
@@ -36,7 +36,7 @@ export function CustomersList() {
 
       <Card>
         <CardHeader className="pb-3">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3">
             <div className="relative w-full sm:w-80">
               <Search className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-slate" />
               <input 
@@ -47,8 +47,8 @@ export function CustomersList() {
                 className="w-full h-8 pl-8 pr-3 rounded-md border border-mist bg-surface text-xs focus:outline-none focus:ring-2 focus:ring-marine/20 focus:border-marine transition-all"
               />
             </div>
-            <div className="flex items-center gap-2">
-              <Button variant="outline" className="gap-1.5 h-8 text-slate text-xs">
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <Button variant="outline" className="gap-1.5 h-8 text-slate text-xs w-full sm:w-auto">
                 <Filter className="w-3.5 h-3.5" /> Filters
               </Button>
             </div>
